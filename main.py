@@ -83,14 +83,11 @@ async def root():
 
 @app.get("/beautify-text", response_model= Union[EventResponse, NoteResponse, ReceiptResponse, OthersResponse])
 async def beautify_text(
-        base64text: str = Query(..., description="The input text to be beautified."),
+        text: str = Query(..., description="The input text to be beautified."),
         docType: str = Query(..., description="The document type."),
 ):
     docType = docType.lower()
     assert docType in ["event", "note", "receipt", "others"], "Invalid document type."
-
-    # decode base64 text
-    text = base64.b64decode(base64text).decode('utf-8')
 
     # form chat prompt
     type_description = DocumentsDict[docType]["type_description"]
