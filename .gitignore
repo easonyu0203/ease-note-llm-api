@@ -1,0 +1,27 @@
+# Ignore the venv directory
+venv/
+
+# Ignore PyCharm project settings
+.idea/
+
+# Ignore VSCode project settings
+.vscode/
+
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore SQLite database file if using SQLite
+*.sqlite3
+
+# Ignore additional files and directories as needed
+.Python
+.env
+db.sqlite3
+*.log
+
+# Ignore dist and build directories (if packaging the app)
+dist/
+build/

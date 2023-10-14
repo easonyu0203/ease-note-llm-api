@@ -1,0 +1,19 @@
+# Ignore .env files as they may contain sensitive data
+.env
+
+# Ignore the venv directory
+venv/
+
+# Ignore cache and build directories
+__pycache__
+build/
+dist/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+db.sqlite3
+/.git
+/.vscode
+.DS_Store
