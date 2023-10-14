@@ -8,7 +8,7 @@ app = FastAPI()
 async def root():
     return {"message": "Hello World"}
 
-
+0
 class BeautifyTextResponse(BaseModel):
     location: str
     start_time: str
