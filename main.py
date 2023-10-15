@@ -9,14 +9,14 @@ from langchain.output_parsers import PydanticOutputParser
 from typing import Optional, List
 from typing import Union
 
-
 load_dotenv()
 chat_model = ChatOpenAI()
 app = FastAPI()
 
 
 class EventResponse(BaseModel):
-    keywords: Optional[List[str]] = Field(..., description="Keywords summarizing the event's content, aiding in search and categorization.")
+    keywords: Optional[List[str]] = Field(...,
+                                          description="Keywords summarizing the event's content, aiding in search and categorization.")
     title: str = Field(..., description="The title of the event.")
     location: Optional[str] = Field(..., description="The location of the event.")
     start_time: Optional[str] = Field(..., description="The time event begin.")
@@ -27,7 +27,8 @@ class EventResponse(BaseModel):
 
 
 class NoteResponse(BaseModel):
-    keywords: Optional[List[str]] = Field(..., description="Keywords summarizing the note's content, aiding in search and categorization.")
+    keywords: Optional[List[str]] = Field(...,
+                                          description="Keywords summarizing the note's content, aiding in search and categorization.")
     title: str = Field(..., description="The subject or topic of the notes.")
     content_md: str = Field(..., description="The content of the note in Markdown format. sprinkled with emojis for "
                                              "enhanced readability.")
@@ -41,18 +42,19 @@ class Item(BaseModel):
 
 class ReceiptResponse(BaseModel):
     keywords: Optional[List[str]] = Field(...,
-                            description="Keywords summarizing the receipt's content, aiding in search and categorization.")
+                                          description="Keywords summarizing the receipt's content, aiding in search and"
+                                                      "categorization.")
     title: str = Field(..., description="A short name to identify the receipt.")
     store_name: Optional[str] = Field(..., description="Name of the store where the purchase was made.")
-    items: List[Item] = Field(..., description="List of items purchased.")
+    items: Optional[List[Item]] = Field(..., description="List of items purchased.")
     total_price: Optional[float] = Field(..., description="Total price of all items purchased.")
     content_md: str = Field(..., description="A summary or description of the purchase, in Markdown format. "
-                                              "sprinkled with emojis for enhanced readability.")
+                                             "sprinkled with emojis for enhanced readability.")
 
 
 class OthersResponse(BaseModel):
     keywords: Optional[List[str]] = Field(...,
-                        description="Keywords summarizing the document's content, aiding in search and categorization.")
+                                          description="Keywords summarizing the document's content, aiding in search and categorization.")
     title: str = Field(..., description="A short name or title to identify the document.")
     content_md: str = Field(..., description="Content or description of the document, in Markdown format. sprinkled "
                                              "with emojis for enhanced readability.")
@@ -64,7 +66,6 @@ DocumentsDict = {
     "receipt": {"type_description": "a shopping receipt or invoice", "response_model": ReceiptResponse},
     "others": {"type_description": "a document of any type", "response_model": OthersResponse},
 }
-
 
 system_msg = "You are a professional organizer whose goal is to convert unstructured data into a formatted structure " \
              "and extract valuable information."
@@ -81,7 +82,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/beautify-text", response_model= Union[EventResponse, NoteResponse, ReceiptResponse, OthersResponse])
+@app.get("/beautify-text", response_model=Union[EventResponse, NoteResponse, ReceiptResponse, OthersResponse])
 async def beautify_text(
         text: str = Query(..., description="The input text to be beautified."),
         docType: str = Query(..., description="The document type."),
