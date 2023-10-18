@@ -17,7 +17,7 @@ app = FastAPI()
 
 class EventMetaDataResponse(BaseModel):
     Keywords: Optional[List[str]] = Field(...,
-                                          description="List of keywords summarizing the event's content, aiding in search and categorization.")
+                                          description="List 3 most important keywords which summarizing the event's content, aiding in search and categorization.")
     title: str = Field(..., description="A short title for the event; it should be limited to 20 characters.")
     location: Optional[str] = Field(..., description="The location of the event.")
     start_time: Optional[str] = Field(..., description="The time event begin.")
@@ -26,7 +26,7 @@ class EventMetaDataResponse(BaseModel):
 
 class NoteMetaDataResponse(BaseModel):
     Keywords: Optional[List[str]] = Field(...,
-                                          description="List of keywords summarizing the note's content, aiding in search and categorization.")
+                                          description="List 3 most important keywords which summarizing the note's content, aiding in search and categorization.")
     title: str = Field(..., description="A short subject or topic of the notes; it should be limited to 20 characters.")
 
 
@@ -38,7 +38,7 @@ class Item(BaseModel):
 
 class ReceiptMetaDataResponse(BaseModel):
     Keywords: Optional[List[str]] = Field(...,
-                                          description="List of keywords summarizing the receipt's content, aiding in search and categorization.")
+                                          description="List 3 most important keywords which summarizing the receipt's content, aiding in search and categorization.")
     title: str = Field(..., description="A short name to identify the receipt; it should be limited to 20 characters.")
     store_name: Optional[str] = Field(..., description="Name of the store where the purchase was made.")
     items: List[Item] = Field(..., description="List of items purchased.")
@@ -47,7 +47,7 @@ class ReceiptMetaDataResponse(BaseModel):
 
 class OthersMetaDataResponse(BaseModel):
     Keywords: Optional[List[str]] = Field(...,
-                                          description="List of keywords summarizing the document's content, aiding in search and categorization.")
+                                          description="List 3 most important keywords which summarizing the document's content, aiding in search and categorization.")
     title: str = Field(..., description="A short name or title to identify the document; it should be limited to 20 characters.")
 
 
