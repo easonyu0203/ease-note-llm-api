@@ -20,8 +20,8 @@ class EventMetaDataResponse(BaseModel):
                                           description="List 3 most important keywords which summarizing the event's content, aiding in search and categorization.")
     title: str = Field(..., description="A short title for the event; it should be limited to 20 characters.")
     location: Optional[str] = Field(..., description="The location of the event.")
-    start_time: Optional[str] = Field(..., description="The time event begin in Iso8601 format.")
-    end_time: Optional[str] = Field(..., description="The time event finish in Iso8601 format.")
+    start_time: Optional[str] = Field(..., description="The time event begin in Iso8601 format. The default year is 2023.")
+    end_time: Optional[str] = Field(..., description="The time event finish in Iso8601 format. The default year is 2023.")
 
 
 class NoteMetaDataResponse(BaseModel):
