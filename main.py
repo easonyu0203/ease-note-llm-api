@@ -116,14 +116,7 @@ async def beautify_text(
     type_description = DocumentsDict[docType]["type_description"]
     response_model_cls = DocumentsDict[docType]["response_model"]
     parser = PydanticOutputParser(pydantic_object=response_model_cls)
-    meta_data_messages = [
-        SystemMessage(content=system_msg),
-        HumanMessage(content=meta_data_prompt.format_prompt(
-            doc=text,
-            type_description=type_description,
-            format_instructions=parser.get_format_instructions()
-        ).to_string()),
-    ]
+
     content_md_message = [
         SystemMessage(content=system_msg),
         HumanMessage(content=content_md_prompt.format_prompt(
@@ -134,10 +127,18 @@ async def beautify_text(
     ]
 
     # get response from chat model
-    meta_data_response, content_md_response = await asyncio.gather(
-        asyncio.to_thread(chat_model.predict_messages, meta_data_messages),
-        asyncio.to_thread(chat_model.predict_messages, content_md_message)
-    )
+    content_md_response = chat_model.predict_messages(content_md_message)
+
+    meta_data_messages = [
+        SystemMessage(content=system_msg),
+        HumanMessage(content=meta_data_prompt.format_prompt(
+            doc=content_md_response.content,
+            type_description=type_description,
+            format_instructions=parser.get_format_instructions()
+        ).to_string()),
+    ]
+
+    meta_data_response = chat_model.predict_messages(meta_data_messages)
 
     # parse response
     meta_data_response = parser.parse(meta_data_response.content)
